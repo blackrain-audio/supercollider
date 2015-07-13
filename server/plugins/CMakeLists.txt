@@ -45,6 +45,7 @@ set(plugin_sources
 	PanUGens.cpp
 	PhysicalModelingUGens.cpp
 	ReverbUGens.cpp
+	SampleSchedUGens.cpp
 	TestUGens.cpp
 	TriggerUGens.cpp
 	UnaryOpUGens.cpp

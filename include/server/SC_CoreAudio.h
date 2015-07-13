@@ -144,6 +144,7 @@ protected:
 	bool mRunThreadFlag;
 	uint32 mSafetyOffset;
 	PriorityQueueT<SC_ScheduledEvent, 2048> mScheduler;
+	PriorityQueueT<SC_ScheduledEvent, 2048> mBlockScheduler;
 	int mNumSamplesPerCallback;
 	uint32 mPreferredHardwareBufferFrameSize;
 	uint32 mPreferredSampleRate;
@@ -189,7 +190,7 @@ public:
 	bool Start();
 	bool Stop();
 
-	void ClearSched() { mScheduler.Empty(); }
+	void ClearSched() { mScheduler.Empty(); mBlockScheduler.Empty(); }
 
 	void RunNonRealTime(float *in, float *out, int numSamples, int64 oscTime);
 	void* RunThread();
@@ -210,6 +211,7 @@ public:
 	bool SendOscPacketMsgToEngine(FifoMsg& inMsg);  // called by OSC socket listener threads, protected by mWorld->mDriverLock
 
 	void AddEvent(SC_ScheduledEvent& event) { mScheduler.Add(event); }
+	void AddBlockEvent(SC_ScheduledEvent& event) { mBlockScheduler.Add(event); }
 
 	double GetAvgCPU() const { return mAvgCPU; }
 	double GetPeakCPU() const { return mPeakCPU; }
